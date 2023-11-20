@@ -257,7 +257,7 @@
             if (text.trim() !== '') {
                 showLoading(); // Show loading animation
 
-                fetch('/api/summarize_text', {
+                fetch('/api/upload_and_summarize', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -292,7 +292,7 @@
             const formData = new FormData();
             formData.append('file', file);
 
-            fetch('/api/summarize_file', {
+            fetch('/api/upload_and_summarize', {
                 method: 'POST',
                 body: formData,
             })
