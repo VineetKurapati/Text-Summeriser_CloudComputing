@@ -6,11 +6,7 @@ import openai
 app = Flask(__name__)
 summaries = {}
 
-# Initialize Google Cloud Storage client
-storage_client = storage.Client()
-bucket_name = 'your_bucket_name'  # Replace with your GCS bucket name
-
-openai.api_key = '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'
+openai.api_key = 'Enter API KEY HERE'
 MAX_TOKENS = 4000
 
 @app.route('/')
@@ -22,10 +18,6 @@ def upload_and_summarize():
     if 'file' in request.files:
         pdf_file = request.files['file']
         if pdf_file.filename != '':
-            # Upload file to Google Cloud Storage
-            blob = storage_client.bucket(bucket_name).blob(pdf_file.filename)
-            blob.upload_from_file(pdf_file)
-
             # Extract text from the uploaded PDF file
             content = extract_text_from_pdf(pdf_file)
 
