@@ -1,4 +1,7 @@
 from flask import Flask, render_template, request, jsonify
+
+from google.cloud import storage
+
 from PyPDF2 import PdfReader
 import openai
 
@@ -6,7 +9,10 @@ app = Flask(__name__)
 summaries = {}
 
 
+openai.api_key = 'Enter API KEY HERE'
+
 openai.api_key = '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'
+
 MAX_TOKENS = 4000
 
 @app.route('/')
@@ -71,7 +77,6 @@ def generate_summary(content):
             top_p=1.0,
             frequency_penalty=0.0,
             presence_penalty=0.0,
-        )
         summary = response.choices[0].text.strip()
         summaries.append(summary)
 
