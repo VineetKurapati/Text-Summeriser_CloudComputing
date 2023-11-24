@@ -1,12 +1,18 @@
 from flask import Flask, render_template, request, jsonify
+
 from google.cloud import storage
+
 from PyPDF2 import PdfReader
 import openai
 
 app = Flask(__name__)
 summaries = {}
 
+
 openai.api_key = 'Enter API KEY HERE'
+
+openai.api_key = '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'
+
 MAX_TOKENS = 4000
 
 @app.route('/')
@@ -18,6 +24,7 @@ def upload_and_summarize():
     if 'file' in request.files:
         pdf_file = request.files['file']
         if pdf_file.filename != '':
+
             # Extract text from the uploaded PDF file
             content = extract_text_from_pdf(pdf_file)
 
@@ -66,12 +73,10 @@ def generate_summary(content):
             engine="text-davinci-002",
             prompt=prompt,
             max_tokens=150,
-            temperature=0.7,
+            temperature=0.9,
             top_p=1.0,
             frequency_penalty=0.0,
             presence_penalty=0.0,
-        )
-
         summary = response.choices[0].text.strip()
         summaries.append(summary)
 

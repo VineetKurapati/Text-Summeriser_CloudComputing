@@ -111,6 +111,12 @@
         </div>
         <label class="dark-switch">
             <input type="checkbox" id="darkModeToggle" onclick="toggleDarkMode()">
+
+        </div>
+        <a href="/">Back to Input</a>
+        <label class="dark-switch">
+            <input type="switch" id="darkModeToggle" onclick="toggleDarkMode()">
+
             <span class="slider"></span>
         </label>
     </div>
@@ -119,6 +125,8 @@
         const isDarkMode = localStorage.getItem('darkMode') === 'true';
 
         // Apply dark mode to body if enabled
+        const isDarkMode = localStorage.getItem('darkMode') === 'true';
+
         if (isDarkMode) {
             document.body.classList.add('dark-mode');
             document.getElementById('darkModeToggle').checked = true;
