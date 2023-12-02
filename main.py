@@ -1,14 +1,12 @@
 from flask import Flask, render_template, request, jsonify
+from google.cloud import storage
 from PyPDF2 import PdfReader
 from google.cloud import secretmanager
 from time import strftime
 import openai
 import google.cloud.logging
 import logging
-
-
-client = google.cloud.logging.Client()
-client.setup_logging()
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 summaries = {}
@@ -22,9 +20,20 @@ def getOpenaiSecret():
 openai.api_key = getOpenaiSecret()
 MAX_TOKENS = 4000
 
+# Configure Google Cloud Storage
+storage_client = storage.Client()
+bucket_name = 'your_bucket_name'  # Add the bucket name here 
+bucket = storage_client.bucket(bucket_name)
+
+def upload_to_gcs(file):
+    if file:
+        filename = secure_filename(file.filename)
+        blob = bucket.blob(filename)
+        blob.upload_from_string(file.read(), content_type=file.content_type)
+        return filename
+
 @app.route('/')
 def index():
-    logging.info('Inside ' + index.__name__ + '()')
     try:
         return render_template('index1.html')
     except ValueError:
@@ -32,30 +41,23 @@ def index():
 
 @app.route('/api/upload_and_summarize', methods=['POST'])
 def upload_and_summarize():
-    logging.info('Inside ' + upload_and_summarize.__name__+ '()')
     try:
         if 'file' in request.files:
             pdf_file = request.files['file']
             if pdf_file.filename != '':
-    
-                # Extract text from the uploaded PDF file
+                gcs_filename = upload_to_gcs(pdf_file)
                 content = extract_text_from_pdf(pdf_file)
-    
-                # Generate summary from the extracted text
                 summary = generate_summary(content)
                 summary_id = len(summaries) + 1
                 summaries[summary_id] = summary
-    
-                return jsonify({'summary_id': summary_id})
+                return jsonify({'summary_id': summary_id, 'filename_uploaded': gcs_filename})
         
         elif 'text' in request.json:
             text = request.json['text']
             if text:
-                # Generate summary from the input text
                 summary = generate_summary(text)
                 summary_id = len(summaries) + 1
                 summaries[summary_id] = summary
-    
                 return jsonify({'summary_id': summary_id})
         
         return jsonify({'error': 'Invalid input'})
@@ -64,7 +66,6 @@ def upload_and_summarize():
 
 @app.route('/summary/<int:summary_id>')
 def show_summary(summary_id):
-    logging.info('Inside ' + show_summary.__name__+ '()')
     try:
         summary = summaries.get(summary_id)
         if summary:
@@ -75,7 +76,6 @@ def show_summary(summary_id):
         logging.exception(show_summary.__name__ + '(): ' + 'summary_id ' + summary_id + ' ' + ValueError)
 
 def extract_text_from_pdf(pdf_file):
-    logging.info('Inside ' + extract_text_from_pdf.__name__+ '()')
     try:
         pdf_reader = PdfReader(pdf_file)
         text = ''
@@ -87,7 +87,6 @@ def extract_text_from_pdf(pdf_file):
         logging.exception(extract_text_from_pdf.__name__ + '(): ' + ValueError)
 
 def generate_summary(content):
-    logging.info('Inside ' + generate_summary.__name__+ '()')
     try:
         chunks = [content[i:i + MAX_TOKENS] for i in range(0, len(content), MAX_TOKENS)]
         summaries = []
