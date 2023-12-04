@@ -1,3 +1,0 @@
-pip install pytest pytest-flask
-
-pytest test_app.py
