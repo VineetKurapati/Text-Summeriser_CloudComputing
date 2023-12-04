@@ -45,10 +45,7 @@ This project utilizes:
 - Google Cloud Services
 - OpenAI API
 
-## License
-
-This project is licensed under the [Apache License 2.0](link_to_license).
 
 ## Contact
 
-For any inquiries or feedback, please reach out to [Your Name](mailto:your.email@example.com).
+For any inquiries or feedback, please reach out to [Vineet Kurapati ](mailto:vxk4505@mavs.uta.edu).
