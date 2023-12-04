@@ -27,9 +27,7 @@ To use the Text Summarization Web App locally:
 3. Click the "Summarize" button to generate a summary.
 4. View the summarized text in the result page.
 
-## Contributing
 
-Contributions are welcome! Feel free to open issues or submit pull requests to help improve this project.
 
 ## Credits
 
