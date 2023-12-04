@@ -1,6 +1,5 @@
 # Text Summarization Web App
 
-![App Screenshot](link_to_screenshot)
 
 Welcome to our Text Summarization Web App! This tool allows users to generate concise summaries from text or PDF files, making information processing and comprehension a breeze.
 
@@ -11,11 +10,6 @@ Welcome to our Text Summarization Web App! This tool allows users to generate co
 - **User-Friendly Interface:** An intuitive UI for a seamless experience.
 - **Dark Mode:** Toggle between light and dark mode for comfortable reading.
 
-## Demo
-
-Check out our live demo [here](link_to_live_demo) to see the app in action!
-
-![Demo GIF](link_to_demo_gif)
 
 ## Installation
 
