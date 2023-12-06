@@ -4,6 +4,7 @@ from google.cloud import secretmanager
 from google.cloud import storage
 from time import strftime
 import openai
+import os
 import google.cloud.logging
 import logging
 from werkzeug.utils import secure_filename
@@ -17,6 +18,8 @@ summaries = {}
 
 logging.basicConfig(level=logging.INFO)
 
+BUCKET_NAME = 'PROD_BUCKET_NAME'
+
 def getOpenaiSecret():
     client = secretmanager.SecretManagerServiceClient()
     return client.access_secret_version(request={"name": "projects/1018379038222/secrets/OPENAI_API_KEY/versions/1"}).payload.data.decode("UTF-8")
@@ -26,7 +29,7 @@ MAX_TOKENS = 4000
 
 # Configure Google Cloud Storage
 storage_client = storage.Client()
-bucket_name = 'text-summarizer-pdf-objects'  # Add the bucket name here 
+bucket_name = os.environ.get(BUCKET_NAME)  # Add the bucket name here 
 bucket = storage_client.bucket(bucket_name)
 
 def upload_to_gcs(file):
