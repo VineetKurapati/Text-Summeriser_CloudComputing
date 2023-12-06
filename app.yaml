@@ -11,11 +11,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-service: textsummarizerprod
+service: textsummarizerdev
 
 env_variables:
-  PROD_BUCKET_NAME: "text-summarizer-pdf-objects"
-  PROD_OPENAI_API_KEY_PATH: "projects/1018379038222/secrets/OPENAI_API_KEY/versions/1"
+  DEV_BUCKET_NAME: "text-summarizer-pdf-objects-dev"
+  DEV_OPENAI_API_KEY_PATH: "projects/1018379038222/secrets/OPENAI_API_KEY_DEV/versions/1"
 
 runtime: python39
 
