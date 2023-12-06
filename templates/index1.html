@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Text Summarization</title>
+    <title>Cloud-Text</title>
     <style>
         /* Global styles */
         * {
@@ -283,7 +283,7 @@
 </head>
 <body>
     <div class="navbar">
-        <span>Text Summarization</span>
+        <span>Cloud Text</span>
         <div class="dark-mode-btn" onclick="toggleDarkMode()">
             <label class="switch">
                 <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode(this)">
@@ -354,16 +354,18 @@
         function summarizeFile(file) {
             const formData = new FormData();
             formData.append('file', file);
-
+            showLoading();
             fetch('/api/upload_and_summarize', {
                 method: 'POST',
                 body: formData,
             })
             .then(response => response.json())
             .then(data => {
+                hideLoading(); 
                 handleSummaryResponse(data);
             })
             .catch(error => {
+                hideLoading(); 
                 console.error('Error:', error);
                 // Handle the error scenario if needed
             });
