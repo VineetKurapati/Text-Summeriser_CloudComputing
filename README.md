@@ -10,6 +10,8 @@ Welcome to our Text Summarization Web App! This tool allows users to generate co
 - **User-Friendly Interface:** An intuitive UI for a seamless experience.
 - **Dark Mode:** Toggle between light and dark mode for comfortable reading.
 
+## Architecture 
+![alt text](https://github.com/VineetKurapati/Text-Summeriser_CloudComputing/blob/main/WhatsApp%20Image%202023-12-06%20at%2012.58.59%20PM.jpeg)
 
 ## Installation
 
